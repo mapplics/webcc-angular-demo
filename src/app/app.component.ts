@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import webccCreator from '../plugins/webcc';
 import * as webcclib from 'webcc';
 
 @Component({
