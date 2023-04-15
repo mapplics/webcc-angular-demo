@@ -11,8 +11,21 @@ export class AppComponent {
 
   webcc: any;
 
+  display = 2;
+
   ngAfterViewInit() {
     this.webcc = new webcclib.Runtime('eyJuYW1lIjoiUmhpbm8iLCJzdG0iOjE2Njc0MzM2MDAwMDAsImV4cCI6MTY5OTA1NjAwMDAwMCwibGl0ZSI6ZmFsc2V9.f923c735ceba1c42e678b3586ea37fde');
+
+
+    // set
+    this.webcc.shapeManager.profileSize = {
+      frame: 250,
+      frameMullion: 100,
+      glassGap: 50,
+      bead: 100,
+    }
+
+    console.log(this.webcc.shapeManager.profileSize);
   }
 
   onToolChange(tool: string) {
@@ -33,5 +46,21 @@ export class AppComponent {
 
   delete() {
     this.webcc!.shapeManager.remove();
+  }
+
+  // loop through three display modes
+  //  'normal','calculate','order'
+  changeDisplay() {
+    this.display = (this.display + 1) % 3;
+
+    switch (this.display) {
+      case 0: this.webcc.shapeManager.shapeMode = 'order';
+        break;
+      case 1: this.webcc.shapeManager.shapeMode = 'calculate';
+        break;
+      default:
+      case 2: this.webcc.shapeManager.shapeMode = 'normal';
+        break;
+    }
   }
 }
