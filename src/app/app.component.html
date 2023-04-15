@@ -1,1 +1,20 @@
-<div id="webcc"></div>
+<div [ngStyle]="{position: 'relative'}">
+    <div id="webcc" [ngStyle]="{height:'100vh'}" v-shortkey="short_keys">
+
+    </div>
+
+    <div class="toolbar">
+        <button class="toolbar-btn" (click)="undo()">Deshacer</button>
+        <button class="toolbar-btn" (click)="redo()">Rehacer</button>
+        <button class="toolbar-btn" (click)="delete()">Eliminar</button>
+        <button class="toolbar-btn margin-bot-16" (click)="clear()">Borrar todo</button>
+
+
+        <button class="toolbar-btn" (click)="onToolChange('frame_rectangle')">Marco rectangular</button>
+        <button class="toolbar-btn" (click)="onToolChange('mullion_vertical')">Division vertical</button>
+        <button class="toolbar-btn" (click)="onToolChange('mullion_horizontal')">Division horizontal</button>
+        <button class="toolbar-btn" (click)="onToolChange('slide')">Corrediza</button>
+        <button class="toolbar-btn" (click)="onToolChange('sash')">coso</button>
+    </div>
+
+</div>
