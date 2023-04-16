@@ -19,10 +19,12 @@ export class AppComponent {
 
     // set
     this.webcc.shapeManager.profileSize = {
+      //marco externo
       frame: 75,
       //parteluz del marco
       frameMullion: 75,
       glassGap: 50,
+      //marco entre el vidrio y el marco (talon)
       bead: 25,
     }
 
