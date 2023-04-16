@@ -19,13 +19,17 @@ export class AppComponent {
 
     // set
     this.webcc.shapeManager.profileSize = {
-      frame: 250,
-      frameMullion: 100,
+      frame: 75,
+      //parteluz del marco
+      frameMullion: 75,
       glassGap: 50,
-      bead: 100,
+      bead: 25,
     }
 
-    console.log(this.webcc.shapeManager.profileSize);
+    //para setear el color
+    this.webcc.shapeManager.barNormal = '#FFF';
+
+    console.log(this.webcc);
   }
 
   onToolChange(tool: string) {
