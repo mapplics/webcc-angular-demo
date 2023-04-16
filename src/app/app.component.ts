@@ -26,6 +26,16 @@ export class AppComponent {
       glassGap: 50,
       //marco entre el vidrio y el marco (talon)
       bead: 25,
+
+    //demo docs
+    // antiTheft: 24,
+    // antiTheftMullion: 45,
+    // bead: 15,
+    // frame: 60,
+    // frameMullion: 90,
+    // sash: 60,
+    // screen: 60,
+    // sashMullion: 60,
     }
 
     //para setear el color
@@ -52,6 +62,14 @@ export class AppComponent {
 
   delete() {
     this.webcc!.shapeManager.remove();
+  }
+
+  getJson() {
+    //bajar archivo dxf
+    this.webcc.shapeManager.exportDxf(true);
+    //tomo el jon
+    var a  = this.webcc.shapeManager.serialize();
+    console.log(a);
   }
 
   // loop through three display modes
