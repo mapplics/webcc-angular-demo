@@ -1,4 +1,4 @@
-<div [ngStyle]="{position: 'relative'}">
+<div [ngStyle]="{position: 'relative'}" (mousemove)="setMousePos()">
     <div id="webcc" [ngStyle]="{height:'100vh'}" v-shortkey="short_keys">
 
     </div>
@@ -14,10 +14,20 @@
         <button class="toolbar-btn" (click)="onToolChange('mullion_vertical')">Division vertical</button>
         <button class="toolbar-btn" (click)="onToolChange('mullion_horizontal')">Division horizontal</button>
         <button class="toolbar-btn" (click)="onToolChange('slide')">Corrediza</button>
-        <button class="toolbar-btn margin-bot-16" (click)="onToolChange('sash')">coso</button>
+        <button class="toolbar-btn" (click)="onToolChange('sash')">Sash</button>
+        <button class="toolbar-btn margin-bot-16" (click)="onToolChange('connector')">Conector</button>
 
         <button class="toolbar-btn" (click)="changeDisplay()">Display mode</button>
+        <button class="toolbar-btn" (click)="export()">Exportar</button>
+        <button class="toolbar-btn" (click)="print()">Print</button>
 
+
+    </div>
+
+    <div class="mouse-pos">
+        <span class="mouse-pos-text">X: {{mousePos.x}}</span>
+        <br/>
+        <span class="mouse-pos-text">Y: {{mousePos.y}}</span>
     </div>
 
 </div>
