@@ -28,9 +28,12 @@ export class AppComponent {
       bead: 20,
     }
 
+    //console.log(this.webcc.angulosCorte);
+    this.webcc.shapeManager.shapeMode = 'order';
+    this.webcc.shapeManager.view.langMode = 'en-US';
     this.webcc.eventBus.getMainStream().subscribe(e => console.log(e));
 
-    console.log(this.webcc.shapeManager.profileSize);
+    console.log(this.webcc);
   }
 
   onToolChange(tool: string) {
@@ -73,6 +76,7 @@ export class AppComponent {
     //console.log(this.webcc.shapeManager.toNoDimData());
 
     const components: any[] = [];
+    console.log(this.webcc.dimManager.dims);
 
     /// Conectores
     this.webcc.shapeManager.couples.forEach(couple => {
@@ -85,10 +89,11 @@ export class AppComponent {
       });
     });
 
+    
     /// Ventanas
     this.webcc.shapeManager.shapem.forEach(frame => {
 
-
+        
       frame.children.forEach(child => {
         if (child.type !== 'Bar' && child.type !== 'Glass' && child.type !== 'Slide') return;
 
