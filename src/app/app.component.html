@@ -15,10 +15,15 @@
         <button class="toolbar-btn" (click)="onToolChange('mullion_horizontal')">Division horizontal</button>
         <button class="toolbar-btn" (click)="onToolChange('slide')">Corrediza</button>
         <button class="toolbar-btn" (click)="onToolChange('sash')">Sash</button>
-        <button class="toolbar-btn margin-bot-16" (click)="onToolChange('connector')">Conector</button>
+        <button class="toolbar-btn" (click)="onToolChange('connector')">Conector</button>
+
+        <button class="toolbar-btn" (click)="onToolChange('note')">Nota</button>
+        <button class="toolbar-btn margin-bot-16" (click)="importWindowS60()">Importar S60</button>
+        <button class="toolbar-btn margin-bot-16" (click)="importWindowSliding()">Importar Sliding</button>
 
         <button class="toolbar-btn" (click)="changeDisplay()">Display mode</button>
         <button class="toolbar-btn" (click)="export()">Exportar</button>
+        <button class="toolbar-btn" (click)="exportJson()">Exportar json</button>
         <button class="toolbar-btn" (click)="print()">Print</button>
 
 
