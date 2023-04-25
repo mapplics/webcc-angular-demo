@@ -1,6 +1,17 @@
 import { Component } from '@angular/core';
 import * as webcclib from 'webcc';
 
+
+interface DrawingComponent {
+  id: number,
+  windowId: number,
+  type: 'connector' | 'windowComponent',
+  description: string,
+  medidas: string
+  angulosCorte: string,
+  object: any,
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -69,7 +80,7 @@ export class AppComponent {
 
     this.webcc!.shapeManager.openFile(win, true, true);
     //se lo tenemos q poner al importar para luego verlo en la estructura
-    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length-1].label.text =
+    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].label.text =
       's60|ventana-exterior-projectante';
 
   }
@@ -81,7 +92,7 @@ export class AppComponent {
 
     this.webcc!.shapeManager.openFile(win, true, true);
     //se lo tenemos q poner al importar para luego verlo en la estructura
-    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length-1].label.text =
+    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].label.text =
       'sliding|Dobleriel-simetrica-hoja-80';
 
   }
@@ -107,24 +118,37 @@ export class AppComponent {
   export() {
     //console.log(this.webcc.shapeManager.toNoDimData());
 
-    const conectors: any[] = [];
-    const windows: any[] = [];
-    const components: any[] = [];
+    /// Listado de componentes que componen las figuras dibujadas
+    const components: DrawingComponent[] = [];
+
     console.log(this.webcc.dimManager.visualIDimInfos);
 
-    /// Conectores
+    /// Parseo los conectores
     this.webcc.shapeManager.couples.forEach((couple) => {
-        conectors.push({
-        id: couple.id,
-        tipo: 'Conector',
-        medidas:
-          Math.round(couple.polygon.mulShape.length) +
-          ' x ' +
-          Math.round(couple.size),
-        angulosCorte: couple.cutAngle,
-      });
+      components.push(this.parseConnector(couple));
     });
 
+    /// Array de todos los children que componen las figuras
+    const children: any[] = [];
+    this.webcc.shapeManager.shapem.forEach((frame) => children.push(...this.flatChildren(frame.children)));
+
+    //console.log(children);
+
+    /// Parseo los componentes de las ventanas
+    children.forEach((child) => {
+      if (child.type === 'Bar') {
+        components.push(this.parseBar(child));
+      }
+
+      if (child.type === 'Glass') {
+        components.push(this.parseGlass(child));
+      }
+    });
+
+
+    console.table(components);
+
+    /*
     /// Ventanas
     this.webcc.shapeManager.shapem.forEach((frame) => {
       debugger;
@@ -170,7 +194,7 @@ export class AppComponent {
                 window.push(this.parseGlass(sashChild, 'Vidrio'));
 
                 sashChild.bead.children.forEach((bead) => {
-                    window.push(this.parseBar(bead, 'MarcoVidrio'));
+                  window.push(this.parseBar(bead, 'MarcoVidrio'));
                 });
               }
 
@@ -193,10 +217,77 @@ export class AppComponent {
       
 
       console.table(window);
+      
     });
 
     //console.table(conectors);
     //console.table(windows);
+    */
+  }
+
+  /// Descompone los hijos de un elemento en un array, funcion recursiva
+  flatChildren(children: any[]): any[] {
+    const result: any[] = [];
+
+    children.forEach((child) => {
+      result.push(child);
+
+      if (child.children?.length > 0) {
+        result.push(...this.flatChildren(child.children));
+      }
+    });
+
+    return result;
+  }
+
+  
+  parseBar(bar: any): DrawingComponent {
+    return {
+      id: bar.id,
+      windowId: bar.topFrame.id,
+      description: bar.parent.type === 'Frame'
+        ? 'Perfil'
+        : bar.parent.type === 'Bead'
+          ? 'MarcoVidrio'
+          : bar.parent.type === 'Sash'
+            ? 'PerfilPuerta Sash'
+            : 'Unrecognized: ' + bar.parent.type,
+      type: 'windowComponent',
+      medidas:
+        Math.round(bar.polygon.mulShape.length) + ' x ' + Math.round(bar.width),
+      angulosCorte: bar.cutAngle,
+      object: bar,
+    };
+  }
+
+  parseGlass(glass: any): DrawingComponent {
+    return {
+      id: glass.id,
+      windowId: glass.topFrame.id,
+      type: 'windowComponent',
+      description: 'Vidrio',
+      medidas:
+        Math.round(glass.polygon.box.xmax - glass.polygon.box.xmin) +
+        ' x ' +
+        Math.round(glass.polygon.box.ymax - glass.polygon.box.ymin),
+      angulosCorte: '',
+      object: glass,
+    };
+  }
+
+  parseConnector(connector: any): DrawingComponent {
+    return {
+      id: connector.id,
+      windowId: connector.parent.id,
+      type: 'connector',
+      description: 'Conector',
+      medidas:
+        Math.round(connector.polygon.mulShape.length) +
+        ' x ' +
+        Math.round(connector.size),
+      angulosCorte: connector.cutAngle,
+      object: connector,
+    };
   }
 
   exportJson() {
@@ -211,28 +302,6 @@ export class AppComponent {
     this.webcc.refresh();
     console.log(this.webcc.shapeManager.serialize()); // download json file
     //console.log(this.webcc.shapeManager.serialize());
-  }
-
-  parseBar(bar: any, name: string) {
-    return {
-      id: bar.id,
-      tipo: name,
-      medidas:
-        Math.round(bar.polygon.mulShape.length) + ' x ' + Math.round(bar.width),
-      angulosCorte: bar.cutAngle,
-    };
-  }
-
-  parseGlass(glass: any, name: string) {
-    return {
-      id: glass.id,
-      tipo: name,
-      medidas:
-        Math.round(glass.polygon.box.xmax - glass.polygon.box.xmin) +
-        ' x ' +
-        Math.round(glass.polygon.box.ymax - glass.polygon.box.ymin),
-      angulosCorte: '',
-    };
   }
 
   print() {
