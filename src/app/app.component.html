@@ -3,36 +3,89 @@
 
     </div>
 
-    <div class="toolbar">
-        <button class="toolbar-btn" (click)="undo()">Deshacer</button>
-        <button class="toolbar-btn" (click)="redo()">Rehacer</button>
-        <button class="toolbar-btn" (click)="delete()">Eliminar</button>
-        <button class="toolbar-btn margin-bot-16" (click)="clear()">Borrar todo</button>
+    <div class="toolbar w-64 h-screen overflow-y-scroll">
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="undo()">Deshacer</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="redo()">Rehacer</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="delete()">Eliminar</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-4"
+            (click)="clear()">Borrar todo</button>
 
 
-        <button class="toolbar-btn" (click)="onToolChange('frame_rectangle')">Marco rectangular</button>
-        <button class="toolbar-btn" (click)="onToolChange('mullion_vertical')">Division vertical</button>
-        <button class="toolbar-btn" (click)="onToolChange('mullion_horizontal')">Division horizontal</button>
-        <button class="toolbar-btn" (click)="onToolChange('slide')">Corrediza</button>
-        <button class="toolbar-btn" (click)="onToolChange('sash')">Sash</button>
-        <button class="toolbar-btn" (click)="onToolChange('connector')">Conector</button>
 
-        <button class="toolbar-btn" (click)="onToolChange('note')">Nota</button>
-        <button class="toolbar-btn margin-bot-16" (click)="importWindowS60()">Importar S60</button>
-        <button class="toolbar-btn margin-bot-16" (click)="importWindowSliding()">Importar Sliding</button>
+        <select [(ngModel)]="selectedTool" (change)="onToolSelectChange()"
+            class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1">
+            <ng-container *ngFor="let tool of tools">
+                <option [value]="tool">{{tool}}</option>
+            </ng-container>
+        </select>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="selectTool(toolType.frame_rectangle)">Marco rectangular</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="selectTool(toolType.mullion_vertical)">Division vertical</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="selectTool(toolType.mullion_horizontal)">Division horizontal</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="selectTool(toolType.slide)">Corrediza</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="selectTool(toolType.sash)">Sash</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-4"
+            (click)="selectTool(toolType.connector)">Conector</button>
 
-        <button class="toolbar-btn" (click)="changeDisplay()">Display mode</button>
-        <button class="toolbar-btn" (click)="export()">Exportar</button>
-        <button class="toolbar-btn" (click)="exportJson()">Exportar json</button>
-        <button class="toolbar-btn" (click)="print()">Print</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="selectTool(toolType.note)">Nota</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="importWindowS60()">Importar S60</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="importWindowSliding()">Importar Sliding</button>
+
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="changeDisplay()">Display mode</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="exportMaterials()">Exportar Materiales</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="exportJson()">Exportar json</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+            (click)="print()">Print</button>
+
+
+        <div class="bg-slate-500 text-white p-4 rounded mb-1">
+            <select [(ngModel)]="ventanaSeleccionada"
+                class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1 w-full">
+                <ng-container *ngFor="let ventana of ventanasDisponibles">
+                    <option [value]="ventana.value">{{ventana.name}}</option>
+                </ng-container>
+            </select>
+            <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1 w-full"
+                (click)="importWindow()">Importar ventana</button>
+        </div>
+
 
 
     </div>
 
     <div class="mouse-pos">
         <span class="mouse-pos-text">X: {{mousePos.x}}</span>
-        <br/>
+        <br />
         <span class="mouse-pos-text">Y: {{mousePos.y}}</span>
+    </div>
+
+
+    <div class="h-64 w-64 bg-slate-600 top-0 right-0 p-4 absolute" *ngIf="slideSettings !== null">
+        <div class="flex flex-row justify-between">
+
+            <select [(ngModel)]="selectedSlideType" (change)="changeSlideType(false)"
+                class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1 w-full mr-1">
+                <ng-container *ngFor="let option of slideTypes">
+                    <option [value]="option">{{option}}</option>
+                </ng-container>
+            </select>
+
+            <button class="bg-red-500 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded mb-1"
+                (click)="changeSlideType(true)">Siguiente</button>
+        </div>
     </div>
 
 </div>

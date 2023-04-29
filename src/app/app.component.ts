@@ -1,16 +1,7 @@
 import { Component } from '@angular/core';
 import * as webcclib from 'webcc';
-
-
-interface DrawingComponent {
-  id: number,
-  windowId: number,
-  type: 'connector' | 'windowComponent',
-  description: string,
-  medidas: string
-  angulosCorte: string,
-  object: any,
-}
+import { ToolType } from './tools';
+import { exportMaterials } from './export_materials';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +10,35 @@ interface DrawingComponent {
 })
 export class AppComponent {
   title = 'angular-demo';
-
-  mousePos = { x: 0, y: 0 };
-
   webcc: any;
 
+
+  /// Listado de herramientas para armar el dropdown
+  tools = Object.values(ToolType);
+  selectedTool = ToolType.none;
+  get toolType(): typeof ToolType {
+    return ToolType;
+  }
+
+  mousePos = { x: 0, y: 0 };
   display = 2;
+
+
+  /// Ventanas disponibles para importar
+  ventanasDisponibles: { name: string; value: any }[] = [
+    { name: 'Dobleriel 2 hojas', value: JSON.stringify(require('../assets/ventanas/dobleriel_2hojas.json')) },
+    { name: 'Dobleriel 4 hojas', value: JSON.stringify(require('../assets/ventanas/dobleriel_4hojas.json')) },
+    { name: 'Tripleriel 3 hojas', value: JSON.stringify(require('../assets/ventanas/tripleriel_3hojas.json')) },
+  ];
+  ventanaSeleccionada: string = this.ventanasDisponibles[0].value;
+
+
+  /// Cuando se selecciona una ventana de tipo Slide aparece un menu arriba a la derecha para modificar sus propiedades
+  /// por ahora solo puse para modificar el tipo de ventana. Son 153 veentanas predefinidas de las que se pueden elegir
+  /// Se cambian seteando un index en el objeto slide, no estan documentados en ningun lado.
+  slideTypes = [...Array(153).keys()];
+  slideSettings: any = null;
+  selectedSlideType = 0;
 
   ngAfterViewInit() {
     this.webcc = new webcclib.Runtime(
@@ -45,31 +59,55 @@ export class AppComponent {
     this.webcc.eventBus.getMainStream().subscribe((e) => {
       console.log(e);
 
-      if (e.type == 'note_settings') {
-        debugger;
+      if (e.type == 'frame_hit' || e.type == 'structure_changed') {
+        return;
+      }
+
+      /// Cuando clickeo un panel de la ventana se dispara este evento,si tiene appliedOptionIndex es porque el panel
+      /// pertenece a una ventana de tipo slide. Guardo el payload del evento en slideSettings para mostrar el menu de edicion de arriba a la derecha
+      if (e.type == 'sash_group_settings' && e.payload?.settings[0].appliedOptionIndex) {
+        const slide = e.payload?.settings[0];
+
+        if (!slide) return;
+
+        this.selectedSlideType = slide?.appliedOptionIndex;
+        this.slideSettings = e.payload;
+      } else {
+
+        /// Si no es una ventana de tipo slide, oculto el menu de edicion
+        this.slideSettings = null;
       }
     });
 
     console.log(this.webcc);
   }
 
-  onToolChange(tool: string) {
-    this.webcc!.toolManager.takeTool(tool);
+  selectTool(tool: ToolType) {
+    this.selectedTool = tool;
+    this.webcc!.toolManager.takeTool(this.selectedTool);
+  }
+
+  onToolSelectChange() {
+    this.selectTool(this.selectedTool);
   }
 
   clear() {
+    this.slideSettings = null;
     this.webcc!.shapeManager.clear(true);
   }
 
   undo() {
+    this.slideSettings = null;
     this.webcc!.mometoManager.undo();
   }
 
   redo() {
+    this.slideSettings = null;
     this.webcc!.mometoManager.redo();
   }
 
   delete() {
+    this.slideSettings = null;
     this.webcc!.shapeManager.remove();
   }
 
@@ -80,7 +118,7 @@ export class AppComponent {
 
     this.webcc!.shapeManager.openFile(win, true, true);
     //se lo tenemos q poner al importar para luego verlo en la estructura
-    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].label.text =
+    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].serial.text =
       's60|ventana-exterior-projectante';
 
   }
@@ -92,7 +130,7 @@ export class AppComponent {
 
     this.webcc!.shapeManager.openFile(win, true, true);
     //se lo tenemos q poner al importar para luego verlo en la estructura
-    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].label.text =
+    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].serial.text =
       'sliding|Dobleriel-simetrica-hoja-80';
 
   }
@@ -115,198 +153,31 @@ export class AppComponent {
     }
   }
 
-  export() {
-    //console.log(this.webcc.shapeManager.toNoDimData());
-
-    /// Listado de componentes que componen las figuras dibujadas
-    const components: DrawingComponent[] = [];
-
-    console.log(this.webcc.dimManager.visualIDimInfos);
-
-    /// Parseo los conectores
-    this.webcc.shapeManager.couples.forEach((couple) => {
-      components.push(this.parseConnector(couple));
-    });
-
-    /// Array de todos los children que componen las figuras
-    const children: any[] = [];
-    this.webcc.shapeManager.shapem.forEach((frame) => children.push(...this.flatChildren(frame.children)));
-
-    //console.log(children);
-
-    /// Parseo los componentes de las ventanas
-    children.forEach((child) => {
-      if (child.type === 'Bar') {
-        components.push(this.parseBar(child));
-      }
-
-      if (child.type === 'Glass') {
-        components.push(this.parseGlass(child));
-      }
-    });
-
-
-    console.table(components);
-
-    /*
-    /// Ventanas
-    this.webcc.shapeManager.shapem.forEach((frame) => {
-      debugger;
-        console.log(frame.label.text);
-      const window: any[] = [];
-      frame.children.forEach((child) => {
-        if (
-          child.type !== 'Bar' &&
-          child.type !== 'Glass' &&
-          child.type !== 'Slide'
-        )
-          return;
-
-        if (child.type === 'Bar') {
-            window.push(this.parseBar(child, 'Perfil'));
-        }
-
-        if (child.type === 'Glass') {
-            window.push(this.parseGlass(child, 'Vidrio'));
-
-          child.bead.children.forEach((bead) => {
-            window.push(this.parseBar(bead, 'MarcoVidrio'));
-          });
-        }
-
-        if (child.type === 'Slide') {
-          child.children.forEach((sash) => {
-            if (sash.type !== 'Sash') return;
-
-            sash.children.forEach((sashChild) => {
-              if (
-                sashChild.type !== 'Bar' &&
-                sashChild.type !== 'Glass' &&
-                sashChild.type !== 'Handle'
-              )
-                return;
-
-              if (sashChild.type === 'Bar') {
-                window.push(this.parseBar(sashChild, 'PerfilPuerta'));
-              }
-
-              if (sashChild.type === 'Glass') {
-                window.push(this.parseGlass(sashChild, 'Vidrio'));
-
-                sashChild.bead.children.forEach((bead) => {
-                  window.push(this.parseBar(bead, 'MarcoVidrio'));
-                });
-              }
-
-              if (sashChild.type === 'Handle') {
-                if (sashChild.hidden) return;
-                window.push({
-                  id: sashChild.id,
-                  tipo: 'Manija',
-                  medidas: '-',
-                  angulosCorte: '-',
-                });
-              }
-            });
-          });
-        }
-      });
-
-      windows.push(window);
-
-      
-
-      console.table(window);
-      
-    });
-
-    //console.table(conectors);
-    //console.table(windows);
-    */
-  }
-
-  /// Descompone los hijos de un elemento en un array, funcion recursiva
-  flatChildren(children: any[]): any[] {
-    const result: any[] = [];
-
-    children.forEach((child) => {
-      result.push(child);
-
-      if (child.children?.length > 0) {
-        result.push(...this.flatChildren(child.children));
-      }
-    });
-
-    return result;
-  }
-
-  
-  parseBar(bar: any): DrawingComponent {
-    return {
-      id: bar.id,
-      windowId: bar.topFrame.id,
-      description: bar.parent.type === 'Frame'
-        ? 'Perfil'
-        : bar.parent.type === 'Bead'
-          ? 'MarcoVidrio'
-          : bar.parent.type === 'Sash'
-            ? 'PerfilPuerta Sash'
-            : 'Unrecognized: ' + bar.parent.type,
-      type: 'windowComponent',
-      medidas:
-        Math.round(bar.polygon.mulShape.length) + ' x ' + Math.round(bar.width),
-      angulosCorte: bar.cutAngle,
-      object: bar,
-    };
-  }
-
-  parseGlass(glass: any): DrawingComponent {
-    return {
-      id: glass.id,
-      windowId: glass.topFrame.id,
-      type: 'windowComponent',
-      description: 'Vidrio',
-      medidas:
-        Math.round(glass.polygon.box.xmax - glass.polygon.box.xmin) +
-        ' x ' +
-        Math.round(glass.polygon.box.ymax - glass.polygon.box.ymin),
-      angulosCorte: '',
-      object: glass,
-    };
-  }
-
-  parseConnector(connector: any): DrawingComponent {
-    return {
-      id: connector.id,
-      windowId: connector.parent.id,
-      type: 'connector',
-      description: 'Conector',
-      medidas:
-        Math.round(connector.polygon.mulShape.length) +
-        ' x ' +
-        Math.round(connector.size),
-      angulosCorte: connector.cutAngle,
-      object: connector,
-    };
+  exportMaterials() {
+    exportMaterials(this.webcc);
   }
 
   exportJson() {
     console.log(this.webcc.shapeManager);
-    debugger;
+    //debugger;
 
     //this.webcc.shapeManager.notes.push('s60');
     //this.webcc.shapeManager.notes.push({'model':'ventana-exterior-projectante'});
 
-    this.webcc.shapeManager.shapem[0].label.text =
-      's60|ventana-exterior-projectante';
-    this.webcc.refresh();
+    //this.webcc.shapeManager.shapem[0].label.text =
+    //'s60|ventana-exterior-projectante';
+    //this.webcc.refresh();
     console.log(this.webcc.shapeManager.serialize()); // download json file
     //console.log(this.webcc.shapeManager.serialize());
+
   }
 
   print() {
+    const file = '{"sm":[{"uid":1,"type":"Frame","ps":{"f":50,"fm":100,"sa":60,"usa":60,"dsa":60,"il":60,"sc":60,"sm":60,"kw":200,"b":20,"a":24,"am":45,"mf":5,"ms":5,"gg":50},"polygon":{"type":"polygon","spLine":{"polyId":{"idx":-1,"pos":-1},"startSplit":false,"endSplit":false,"equalSplit":0,"ss":false,"es":false,"sFd":false,"eFd":false,"alignType":0,"reinforced":false},"polygon":[[{"ps":{"x":-942.7411392729755,"y":394.3060738364668,"name":"point"},"pe":{"x":-942.7411392729755,"y":1994.3060738364668,"name":"point"},"name":"segment"},{"ps":{"x":-942.7411392729755,"y":1994.3060738364668,"name":"point"},"pe":{"x":1154.2588607270245,"y":1994.3060738364668,"name":"point"},"name":"segment"},{"ps":{"x":1154.2588607270245,"y":1994.3060738364668,"name":"point"},"pe":{"x":1154.2588607270245,"y":394.3060738364668,"name":"point"},"name":"segment"},{"ps":{"x":1154.2588607270245,"y":394.3060738364668,"name":"point"},"pe":{"x":-942.7411392729755,"y":394.3060738364668,"name":"point"},"name":"segment"}]],"virtual":false},"fm":{"ejw":[0,0,0,0],"ew":[50,50,50,50]},"mm":{"sp":[],"fls":{"fls":[{"type":"Glass","pid":{"idx":-1,"pos":-1},"bd":{"type":"Bead","fm":{"ejw":[0,0,0,0],"ew":[20,20,20,20]}},"ser":{"text":"F1","offvec":{"x":0,"y":0,"name":"vector"}},"spet":{"sp":"","th":0,"te":[],"tm":{"width":0,"height":0},"mw":0},"wtf":true,"ws":false,"hs":[]}]},"lpfs":[],"dbs":{"bars":[]}},"sm":[],"cm":{"bn":"#F0540B","ben":"#F0540B","g":"rgba(0, 255, 255, 0.6)","hd":"#D4D1D9"},"tv":{"offset":{"x":0,"y":0,"name":"vector"},"hidden":false},"dm":{"dims":[{"type":"line","eidx":0,"midx":-1,"name":"","ds":true,"ov":{"x":0,"y":0,"name":"vector"},"at":0},{"type":"line","eidx":1,"midx":-1,"name":"","ds":true,"ov":{"x":0,"y":0,"name":"vector"},"at":0}]},"edm":[],"lds":false,"ser":{"from":{"x":1457.2588607270245,"y":1994.3060738364668,"name":"point"},"to":{"x":1873.5693659395347,"y":790.2284475333391,"name":"point"},"text":"asdasdxcvxcvxcvxc","fontSize":120,"cr":"blue"},"tn":false,"esr":[]}],"wall":[],"cp":[],"note":[{"from":{"x":-13.65682054439094,"y":895.8396453171109,"name":"point"},"to":{"x":-1510.5807543491596,"y":804.0038211573093,"name":"point"},"text":"nota-test","fontSize":120,"cr":"blue"}],"scale":0,"epi":[],"wlc":"#b4f595","s":{"cjs":100,"cs":60}}';
+    this.webcc.shapeManager.openFile(file, true, true);
+
     console.log(this.webcc.dimManager);
-    debugger;
+    //debugger;
     //let compiler = new Compiler();
 
     //compiler.pushKey(key, value);
@@ -326,10 +197,38 @@ export class AppComponent {
     //console.log(compiler);
   }
 
+  /// Si le paso true es para que elija el siguiente indice en vez de tomar el del dropdown
+  /// para iterar mas rapido entre los 153 e ir viendo los diferentes tipos de ventanas
+  changeSlideType(next: boolean) {
+    if (!this.slideSettings) return;
+
+    const slide = this.slideSettings?.settings[0];
+
+    if (!slide) return;
+
+    if (next) {
+      if (slide.appliedOptionIndex === "152") {
+        slide.appliedOptionIndex = 0;
+      } else {
+        slide.appliedOptionIndex++;
+      }
+    } else {
+      slide.appliedOptionIndex = this.selectedSlideType;
+
+    }
+
+    this.selectedSlideType = slide.appliedOptionIndex;
+    this.webcc.shapeManager.updatePoly(); /// Esta funcion actualiza el canvas, el refresh() no me funcionaba
+  }
+
   setMousePos() {
     this.mousePos = {
       x: Math.round(this.webcc.toolManager.mousePosition.x),
       y: Math.round(this.webcc.toolManager.mousePosition.y),
     };
+  }
+
+  importWindow() {
+    this.webcc.shapeManager.openFile(this.ventanaSeleccionada, true, true);
   }
 }
