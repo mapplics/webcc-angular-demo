@@ -4,14 +4,14 @@
             "uid": 1,
             "type": "Frame",
             "ps": {
-                "f": 50,
-                "fm": 100,
-                "sa": 60,
-                "usa": 60,
-                "dsa": 60,
-                "il": 60,
+                "f": 60,
+                "fm": 60,
+                "sa": 98,
+                "usa": 98,
+                "dsa": 98,
+                "il": 98,
                 "sc": 60,
-                "sm": 60,
+                "sm": 98,
                 "kw": 200,
                 "b": 20,
                 "a": 24,
@@ -41,52 +41,52 @@
                     [
                         {
                             "ps": {
-                                "x": 1475.512138222644,
-                                "y": -317.8829190056134,
+                                "x": 1595.7472802268057,
+                                "y": -675.2238280965227,
                                 "name": "point"
                             },
                             "pe": {
-                                "x": 1475.512138222644,
-                                "y": 1682.1170809943865,
+                                "x": 1595.7472802268057,
+                                "y": 1324.7761719034775,
                                 "name": "point"
                             },
                             "name": "segment"
                         },
                         {
                             "ps": {
-                                "x": 1475.512138222644,
-                                "y": 1682.1170809943865,
+                                "x": 1595.7472802268057,
+                                "y": 1324.7761719034775,
                                 "name": "point"
                             },
                             "pe": {
-                                "x": 4475.512138222644,
-                                "y": 1682.1170809943865,
+                                "x": 5595.747280226806,
+                                "y": 1324.7761719034775,
                                 "name": "point"
                             },
                             "name": "segment"
                         },
                         {
                             "ps": {
-                                "x": 4475.512138222644,
-                                "y": 1682.1170809943865,
+                                "x": 5595.747280226806,
+                                "y": 1324.7761719034775,
                                 "name": "point"
                             },
                             "pe": {
-                                "x": 4475.512138222644,
-                                "y": -317.88291900561353,
+                                "x": 5595.747280226806,
+                                "y": -675.2238280965225,
                                 "name": "point"
                             },
                             "name": "segment"
                         },
                         {
                             "ps": {
-                                "x": 4475.512138222644,
-                                "y": -317.88291900561353,
+                                "x": 5595.747280226806,
+                                "y": -675.2238280965225,
                                 "name": "point"
                             },
                             "pe": {
-                                "x": 1475.512138222644,
-                                "y": -317.8829190056134,
+                                "x": 1595.7472802268057,
+                                "y": -675.2238280965227,
                                 "name": "point"
                             },
                             "name": "segment"
@@ -103,10 +103,10 @@
                     2
                 ],
                 "ew": [
-                    50,
-                    50,
-                    50,
-                    50
+                    60,
+                    60,
+                    60,
+                    60
                 ]
             },
             "mm": {
@@ -132,7 +132,7 @@
                         "y": 0,
                         "name": "vector"
                     },
-                    "appliedOptionIndex": 43,
+                    "appliedOptionIndex": "2",
                     "emptyTrackAppended": "none",
                     "isDoor": false,
                     "ptd": false,
@@ -158,10 +158,10 @@
                                     0
                                 ],
                                 "ew": [
-                                    60,
-                                    60,
-                                    60,
-                                    60
+                                    98,
+                                    98,
+                                    98,
+                                    98
                                 ]
                             },
                             "mm": {
@@ -221,7 +221,7 @@
                                 }
                             },
                             "hm": {
-                                "openDirection": "left",
+                                "openDirection": "right",
                                 "lock": [
                                     {
                                         "hidden": false,
@@ -232,18 +232,18 @@
                                         "dim": {
                                             "name": "",
                                             "from": {
-                                                "x": 4570.512138222644,
-                                                "y": 682.1170809943865,
+                                                "x": 1991.2472802268057,
+                                                "y": 324.77617190347735,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 4570.512138222644,
-                                                "y": 1682.1170809943865,
+                                                "x": 1991.2472802268057,
+                                                "y": 1324.7761719034775,
                                                 "name": "point"
                                             },
                                             "hidden": false,
                                             "offset": {
-                                                "x": 0,
+                                                "x": 3804.290697674419,
                                                 "y": 0,
                                                 "name": "vector"
                                             },
@@ -252,12 +252,12 @@
                                         "dimToSash": {
                                             "name": "",
                                             "from": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
@@ -271,7 +271,7 @@
                                         },
                                         "lockDimToGround": false,
                                         "lockDimToSash": false,
-                                        "edgeIndex": 3
+                                        "edgeIndex": 1
                                     }
                                 ],
                                 "lock2s": [],
@@ -284,12 +284,12 @@
                                     "dim": {
                                         "name": "",
                                         "from": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
                                         "to": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
@@ -304,12 +304,12 @@
                                     "dimToSash": {
                                         "name": "",
                                         "from": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
                                         "to": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
@@ -323,7 +323,7 @@
                                     },
                                     "lockDimToGround": false,
                                     "lockDimToSash": false,
-                                    "edgeIndex": 3
+                                    "edgeIndex": 1
                                 },
                                 "pullupEnabled": false
                             },
@@ -331,7 +331,7 @@
                                 "dims": []
                             },
                             "trackIndex": 0,
-                            "columnIndex": 2,
+                            "columnIndex": 0,
                             "fixedWidth": -1,
                             "isFixed": false,
                             "attrs": {
@@ -359,10 +359,10 @@
                                     0
                                 ],
                                 "ew": [
-                                    60,
-                                    60,
-                                    60,
-                                    60
+                                    98,
+                                    98,
+                                    98,
+                                    98
                                 ]
                             },
                             "mm": {
@@ -422,28 +422,27 @@
                                 }
                             },
                             "hm": {
-                                "openDirection": "right",
-                                "lock": [],
-                                "lock2s": [
+                                "openDirection": "left",
+                                "lock": [
                                     {
-                                        "hidden": true,
-                                        "hardwareShape": "Lock2",
+                                        "hidden": false,
+                                        "hardwareShape": "Lock",
                                         "autoOffset": true,
-                                        "percentOffset": 0,
+                                        "percentOffset": 0.5,
                                         "useProfileColor": false,
                                         "dim": {
                                             "name": "",
                                             "from": {
-                                                "x": 162.5,
-                                                "y": -200,
+                                                "x": 4750.247280226806,
+                                                "y": 324.77617190347746,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 162.5,
-                                                "y": -200,
+                                                "x": 4750.247280226806,
+                                                "y": 1124.7761719034775,
                                                 "name": "point"
                                             },
-                                            "hidden": false,
+                                            "hidden": true,
                                             "offset": {
                                                 "x": 0,
                                                 "y": 0,
@@ -454,12 +453,12 @@
                                         "dimToSash": {
                                             "name": "",
                                             "from": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
@@ -476,6 +475,7 @@
                                         "edgeIndex": 3
                                     }
                                 ],
+                                "lock2s": [],
                                 "handleForSlide": {
                                     "hidden": true,
                                     "hardwareShape": "HandleForSlide",
@@ -485,12 +485,12 @@
                                     "dim": {
                                         "name": "",
                                         "from": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
                                         "to": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
@@ -505,12 +505,12 @@
                                     "dimToSash": {
                                         "name": "",
                                         "from": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
                                         "to": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
@@ -524,15 +524,15 @@
                                     },
                                     "lockDimToGround": false,
                                     "lockDimToSash": false,
-                                    "edgeIndex": 1
+                                    "edgeIndex": 3
                                 },
                                 "pullupEnabled": false
                             },
                             "dm": {
                                 "dims": []
                             },
-                            "trackIndex": 1,
-                            "columnIndex": 1,
+                            "trackIndex": 0,
+                            "columnIndex": 3,
                             "fixedWidth": -1,
                             "isFixed": false,
                             "attrs": {
@@ -560,10 +560,10 @@
                                     0
                                 ],
                                 "ew": [
-                                    60,
-                                    60,
-                                    60,
-                                    60
+                                    98,
+                                    98,
+                                    98,
+                                    98
                                 ]
                             },
                             "mm": {
@@ -623,7 +623,7 @@
                                 }
                             },
                             "hm": {
-                                "openDirection": "right",
+                                "openDirection": "left",
                                 "lock": [
                                     {
                                         "hidden": false,
@@ -634,13 +634,13 @@
                                         "dim": {
                                             "name": "",
                                             "from": {
-                                                "x": 1893.012138222644,
-                                                "y": 682.1170809943866,
+                                                "x": 3610.2472802268057,
+                                                "y": 324.77617190347746,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 1893.012138222644,
-                                                "y": 1482.1170809943865,
+                                                "x": 3610.2472802268057,
+                                                "y": 1124.7761719034775,
                                                 "name": "point"
                                             },
                                             "hidden": true,
@@ -654,12 +654,264 @@
                                         "dimToSash": {
                                             "name": "",
                                             "from": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
+                                                "y": -200,
+                                                "name": "point"
+                                            },
+                                            "hidden": true,
+                                            "offset": {
+                                                "x": 0,
+                                                "y": 0,
+                                                "name": "vector"
+                                            },
+                                            "position": "right"
+                                        },
+                                        "lockDimToGround": false,
+                                        "lockDimToSash": false,
+                                        "edgeIndex": 3
+                                    }
+                                ],
+                                "lock2s": [
+                                    {
+                                        "hidden": true,
+                                        "hardwareShape": "Lock2",
+                                        "autoOffset": true,
+                                        "percentOffset": 0,
+                                        "useProfileColor": false,
+                                        "dim": {
+                                            "name": "",
+                                            "from": {
+                                                "x": 799.9999999999995,
+                                                "y": -200,
+                                                "name": "point"
+                                            },
+                                            "to": {
+                                                "x": 799.9999999999995,
+                                                "y": -200,
+                                                "name": "point"
+                                            },
+                                            "hidden": false,
+                                            "offset": {
+                                                "x": 0,
+                                                "y": 0,
+                                                "name": "vector"
+                                            },
+                                            "position": "right"
+                                        },
+                                        "dimToSash": {
+                                            "name": "",
+                                            "from": {
+                                                "x": 799.9999999999995,
+                                                "y": -200,
+                                                "name": "point"
+                                            },
+                                            "to": {
+                                                "x": 799.9999999999995,
+                                                "y": -200,
+                                                "name": "point"
+                                            },
+                                            "hidden": true,
+                                            "offset": {
+                                                "x": 0,
+                                                "y": 0,
+                                                "name": "vector"
+                                            },
+                                            "position": "right"
+                                        },
+                                        "lockDimToGround": false,
+                                        "lockDimToSash": false,
+                                        "edgeIndex": 1
+                                    }
+                                ],
+                                "handleForSlide": {
+                                    "hidden": true,
+                                    "hardwareShape": "HandleForSlide",
+                                    "autoOffset": true,
+                                    "percentOffset": 0,
+                                    "useProfileColor": false,
+                                    "dim": {
+                                        "name": "",
+                                        "from": {
+                                            "x": 799.9999999999995,
+                                            "y": -200,
+                                            "name": "point"
+                                        },
+                                        "to": {
+                                            "x": 799.9999999999995,
+                                            "y": -200,
+                                            "name": "point"
+                                        },
+                                        "hidden": false,
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "name": "vector"
+                                        },
+                                        "position": "right"
+                                    },
+                                    "dimToSash": {
+                                        "name": "",
+                                        "from": {
+                                            "x": 799.9999999999995,
+                                            "y": -200,
+                                            "name": "point"
+                                        },
+                                        "to": {
+                                            "x": 799.9999999999995,
+                                            "y": -200,
+                                            "name": "point"
+                                        },
+                                        "hidden": true,
+                                        "offset": {
+                                            "x": 0,
+                                            "y": 0,
+                                            "name": "vector"
+                                        },
+                                        "position": "right"
+                                    },
+                                    "lockDimToGround": false,
+                                    "lockDimToSash": false,
+                                    "edgeIndex": 3
+                                },
+                                "pullupEnabled": false
+                            },
+                            "dm": {
+                                "dims": []
+                            },
+                            "trackIndex": 1,
+                            "columnIndex": 1,
+                            "fixedWidth": -1,
+                            "isFixed": false,
+                            "attrs": {
+                                "lockCode": "",
+                                "lockName": ""
+                            }
+                        },
+                        {
+                            "type": "Sash",
+                            "polyId": {
+                                "idx": -1,
+                                "pos": -1
+                            },
+                            "enabled": true,
+                            "offvec": {
+                                "x": 0,
+                                "y": 0,
+                                "name": "vector"
+                            },
+                            "fm": {
+                                "ejw": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "ew": [
+                                    98,
+                                    98,
+                                    98,
+                                    98
+                                ]
+                            },
+                            "mm": {
+                                "sp": [],
+                                "fls": {
+                                    "fls": [
+                                        {
+                                            "type": "Glass",
+                                            "pid": {
+                                                "idx": -1,
+                                                "pos": -1
+                                            },
+                                            "bd": {
+                                                "type": "Bead",
+                                                "fm": {
+                                                    "ejw": [
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0
+                                                    ],
+                                                    "ew": [
+                                                        20,
+                                                        20,
+                                                        20,
+                                                        20
+                                                    ]
+                                                }
+                                            },
+                                            "ser": {
+                                                "text": "A4",
+                                                "offvec": {
+                                                    "x": 0,
+                                                    "y": 0,
+                                                    "name": "vector"
+                                                }
+                                            },
+                                            "spet": {
+                                                "sp": "",
+                                                "th": 0,
+                                                "te": [],
+                                                "tm": {
+                                                    "width": 0,
+                                                    "height": 0
+                                                },
+                                                "mw": 0
+                                            },
+                                            "wtf": true,
+                                            "ws": false,
+                                            "hs": []
+                                        }
+                                    ]
+                                },
+                                "lpfs": [],
+                                "dbs": {
+                                    "bars": []
+                                }
+                            },
+                            "hm": {
+                                "openDirection": "right",
+                                "lock": [
+                                    {
+                                        "hidden": false,
+                                        "hardwareShape": "Lock",
+                                        "autoOffset": true,
+                                        "percentOffset": 0.5,
+                                        "useProfileColor": false,
+                                        "dim": {
+                                            "name": "",
+                                            "from": {
+                                                "x": 3931.2472802268057,
+                                                "y": 324.77617190347746,
+                                                "name": "point"
+                                            },
+                                            "to": {
+                                                "x": 3931.2472802268057,
+                                                "y": 1124.7761719034775,
+                                                "name": "point"
+                                            },
+                                            "hidden": true,
+                                            "offset": {
+                                                "x": 0,
+                                                "y": 0,
+                                                "name": "vector"
+                                            },
+                                            "position": "right"
+                                        },
+                                        "dimToSash": {
+                                            "name": "",
+                                            "from": {
+                                                "x": 799.9999999999995,
+                                                "y": -200,
+                                                "name": "point"
+                                            },
+                                            "to": {
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
@@ -686,12 +938,12 @@
                                         "dim": {
                                             "name": "",
                                             "from": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
@@ -706,12 +958,12 @@
                                         "dimToSash": {
                                             "name": "",
                                             "from": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
                                             "to": {
-                                                "x": 162.5,
+                                                "x": 799.9999999999995,
                                                 "y": -200,
                                                 "name": "point"
                                             },
@@ -737,12 +989,12 @@
                                     "dim": {
                                         "name": "",
                                         "from": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
                                         "to": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
@@ -757,12 +1009,12 @@
                                     "dimToSash": {
                                         "name": "",
                                         "from": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
                                         "to": {
-                                            "x": 162.5,
+                                            "x": 799.9999999999995,
                                             "y": -200,
                                             "name": "point"
                                         },
@@ -783,8 +1035,8 @@
                             "dm": {
                                 "dims": []
                             },
-                            "trackIndex": 2,
-                            "columnIndex": 0,
+                            "trackIndex": 1,
+                            "columnIndex": 2,
                             "fixedWidth": -1,
                             "isFixed": false,
                             "attrs": {
@@ -844,16 +1096,16 @@
             "lds": false,
             "ser": {
                 "from": {
-                    "x": 4038.012138222644,
-                    "y": 1482.1170809943865,
+                    "x": 4795.747280226806,
+                    "y": 1124.7761719034775,
                     "name": "point"
                 },
                 "to": {
-                    "x": 4038.012138222644,
-                    "y": 1482.1170809943865,
+                    "x": 4795.747280226806,
+                    "y": 1124.7761719034775,
                     "name": "point"
                 },
-                "text": "tripleriel_3hojas",
+                "text": "sliding_dobleriel_4hojas98",
                 "fontSize": 120,
                 "cr": "blue"
             },

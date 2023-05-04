@@ -26,9 +26,14 @@ export class AppComponent {
 
   /// Ventanas disponibles para importar
   ventanasDisponibles: { name: string; value: any }[] = [
-    { name: 'Dobleriel 2 hojas', value: JSON.stringify(require('../assets/ventanas/dobleriel_2hojas.json')) },
-    { name: 'Dobleriel 4 hojas', value: JSON.stringify(require('../assets/ventanas/dobleriel_4hojas.json')) },
-    { name: 'Tripleriel 3 hojas', value: JSON.stringify(require('../assets/ventanas/tripleriel_3hojas.json')) },
+    { name: 'Sliding Dobleriel 2 hojas 80', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_2hojas80.json')) },
+    { name: 'Sliding Dobleriel 2 hojas 98', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_2hojas98.json')) },
+    { name: 'Sliding Dobleriel 3 hojas 80', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_3hojas80.json')) },
+    { name: 'Sliding Dobleriel 3 hojas 98', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_3hojas98.json')) },
+    { name: 'Sliding Dobleriel 4 hojas 80', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_4hojas80.json')) },
+    { name: 'Sliding Dobleriel 4 hojas 98', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_4hojas98.json')) },
+    { name: 'Sliding Tripleriel 3 hojas 80', value: JSON.stringify(require('../assets/ventanas/sliding_tripleriel_3hojas80.json')) },
+    { name: 'Sliding Tripleriel 3 hojas 98', value: JSON.stringify(require('../assets/ventanas/sliding_tripleriel_3hojas98.json')) },
   ];
   ventanaSeleccionada: string = this.ventanasDisponibles[0].value;
 
@@ -47,10 +52,28 @@ export class AppComponent {
 
     // set
     this.webcc.shapeManager.profileSize = {
-      frame: 50,
-      frameMullion: 100,
+
+      antiTheft: 24,
+      antiTheftMullion: 45,
+      bead: 20,/// Junquillo
+      frame: 60,// Ancho de marco
+      frameMullion: 60,/// Ancho de divisores
       glassGap: 50,
-      bead: 20,
+
+      sashMullion: 321,/// Ancho de hoja
+      sash: 321,/// Ancho de hoja
+      interlock: 321,
+      downSash: 321,
+      upSash: 321,
+
+      kfcWaist: 200,
+      millingFrame: 5,
+      millingSash: 5,
+      reinforcedFrameMullion: 90,
+      screen: 60,
+      shadeMullion: 35,
+      shadeSash: 60,
+      shadeSashMullion: 60,
     };
 
     //console.log(this.webcc.angulosCorte);
