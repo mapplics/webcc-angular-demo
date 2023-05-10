@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import * as webcclib from 'webcc';
 import { ToolType } from './tools';
 import { exportMaterials } from './export_materials';
+import { Webcc, dimModeEnum } from './types';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { exportMaterials } from './export_materials';
 })
 export class AppComponent {
   title = 'angular-demo';
-  webcc: any;
+  webcc: Webcc | null = null;
 
 
   /// Listado de herramientas para armar el dropdown
@@ -34,6 +35,18 @@ export class AppComponent {
     { name: 'Sliding Dobleriel 4 hojas 98', value: JSON.stringify(require('../assets/ventanas/sliding_dobleriel_4hojas98.json')) },
     { name: 'Sliding Tripleriel 3 hojas 80', value: JSON.stringify(require('../assets/ventanas/sliding_tripleriel_3hojas80.json')) },
     { name: 'Sliding Tripleriel 3 hojas 98', value: JSON.stringify(require('../assets/ventanas/sliding_tripleriel_3hojas98.json')) },
+    { name: 'S60 Ventana Exterior proyectante', value: JSON.stringify(require('../assets/ventanas/s60_ventana_exterior_proyectante.json')) },
+    { name: 'S60 Ventana Interior Abatir', value: JSON.stringify(require('../assets/ventanas/s60_ventana_interior_abatir.json')) },
+    { name: 'S60 Puerta Exterior Perimetral', value: JSON.stringify(require('../assets/ventanas/s60_puerta_exterior_perimetral.json')) },
+    { name: 'S60 Puerta Interior Perimetral', value: JSON.stringify(require('../assets/ventanas/s60_puerta_interior_perimetral.json')) },
+    { name: 'S60 Puerta Exterior Paso Libre', value: JSON.stringify(require('../assets/ventanas/s60_puerta_exterior_paso_libre.json')) },
+    { name: 'S60 Puerta Interior Paso Libre', value: JSON.stringify(require('../assets/ventanas/s60_puerta_interior_paso_libre.json')) },
+    { name: 'S60 Ventana Exterior Doble', value: JSON.stringify(require('../assets/ventanas/s60_ventana_exterior_doble.json')) },
+    { name: 'S60 Puerta Exterior Doble', value: JSON.stringify(require('../assets/ventanas/s60_puerta_exterior_doble.json')) },
+    { name: 'S60 Puerta Interior Doble', value: JSON.stringify(require('../assets/ventanas/s60_puerta_interior_doble.json')) },
+    { name: 'S60 Puerta Doble Marco Paso Libre', value: JSON.stringify(require('../assets/ventanas/s60_puerta_doble_marco_paso_libre.json')) },
+    { name: 'S60 Puerta Exterior Zapata', value: JSON.stringify(require('../assets/ventanas/s60_puerta_exterior_zapata.json')) },
+    { name: 'S60 Oscilobatiente Simple', value: JSON.stringify(require('../assets/ventanas/s60_oscilobatiente_simple.json')) },
   ];
   ventanaSeleccionada: string = this.ventanasDisponibles[0].value;
 
@@ -51,7 +64,7 @@ export class AppComponent {
     );
 
     // set
-    this.webcc.shapeManager.profileSize = {
+    this.webcc!.shapeManager.profileSize = {
 
       antiTheft: 24,
       antiTheftMullion: 45,
@@ -60,11 +73,11 @@ export class AppComponent {
       frameMullion: 60,/// Ancho de divisores
       glassGap: 50,
 
-      sashMullion: 321,/// Ancho de hoja
-      sash: 321,/// Ancho de hoja
-      interlock: 321,
-      downSash: 321,
-      upSash: 321,
+      sashMullion: 75,/// Ancho de hoja
+      sash: 75,/// Ancho de hoja
+      interlock: 75,
+      downSash: 75,
+      upSash: 75,
 
       kfcWaist: 200,
       millingFrame: 5,
@@ -77,9 +90,9 @@ export class AppComponent {
     };
 
     //console.log(this.webcc.angulosCorte);
-    this.webcc.shapeManager.shapeMode = 'order';
-    this.webcc.shapeManager.view.langMode = 'en-US';
-    this.webcc.eventBus.getMainStream().subscribe((e) => {
+    this.webcc!.shapeManager.shapeMode = dimModeEnum.order;
+    this.webcc!.langMode = 'en-US';
+    this.webcc!.eventBus.getMainStream().subscribe((e) => {
       console.log(e);
 
       if (e.type == 'frame_hit' || e.type == 'structure_changed') {
@@ -141,8 +154,8 @@ export class AppComponent {
 
     this.webcc!.shapeManager.openFile(win, true, true);
     //se lo tenemos q poner al importar para luego verlo en la estructura
-    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].serial.text =
-      's60|ventana-exterior-projectante';
+    //this.webcc!.shapeManager.shapem[this.webcc!.shapeManager.shapem.length - 1].serial.text =
+    //  's60|ventana-exterior-projectante';
 
   }
 
@@ -153,8 +166,8 @@ export class AppComponent {
 
     this.webcc!.shapeManager.openFile(win, true, true);
     //se lo tenemos q poner al importar para luego verlo en la estructura
-    this.webcc.shapeManager.shapem[this.webcc.shapeManager.shapem.length - 1].serial.text =
-      'sliding|Dobleriel-simetrica-hoja-80';
+    // this.webcc!.shapeManager.shapem[this.webcc!.shapeManager.shapem.length - 1].serial.text =
+    //  'sliding|Dobleriel-simetrica-hoja-80';
 
   }
   // loop through three display modes
@@ -164,14 +177,14 @@ export class AppComponent {
 
     switch (this.display) {
       case 0:
-        this.webcc.shapeManager.shapeMode = 'order';
+        this.webcc!.shapeManager.shapeMode = dimModeEnum.order;
         break;
       case 1:
-        this.webcc.shapeManager.shapeMode = 'calculate';
+        this.webcc!.shapeManager.shapeMode = dimModeEnum.calculate;
         break;
       default:
       case 2:
-        this.webcc.shapeManager.shapeMode = 'normal';
+        this.webcc!.shapeManager.shapeMode = dimModeEnum.normal;
         break;
     }
   }
@@ -181,7 +194,7 @@ export class AppComponent {
   }
 
   exportJson() {
-    console.log(this.webcc.shapeManager);
+    console.log(this.webcc!.shapeManager);
     //debugger;
 
     //this.webcc.shapeManager.notes.push('s60');
@@ -190,16 +203,16 @@ export class AppComponent {
     //this.webcc.shapeManager.shapem[0].label.text =
     //'s60|ventana-exterior-projectante';
     //this.webcc.refresh();
-    console.log(this.webcc.shapeManager.serialize()); // download json file
+    //console.log(this.webcc!.shapeManager.serialize()); // download json file
     //console.log(this.webcc.shapeManager.serialize());
 
   }
 
   print() {
     const file = '{"sm":[{"uid":1,"type":"Frame","ps":{"f":50,"fm":100,"sa":60,"usa":60,"dsa":60,"il":60,"sc":60,"sm":60,"kw":200,"b":20,"a":24,"am":45,"mf":5,"ms":5,"gg":50},"polygon":{"type":"polygon","spLine":{"polyId":{"idx":-1,"pos":-1},"startSplit":false,"endSplit":false,"equalSplit":0,"ss":false,"es":false,"sFd":false,"eFd":false,"alignType":0,"reinforced":false},"polygon":[[{"ps":{"x":-942.7411392729755,"y":394.3060738364668,"name":"point"},"pe":{"x":-942.7411392729755,"y":1994.3060738364668,"name":"point"},"name":"segment"},{"ps":{"x":-942.7411392729755,"y":1994.3060738364668,"name":"point"},"pe":{"x":1154.2588607270245,"y":1994.3060738364668,"name":"point"},"name":"segment"},{"ps":{"x":1154.2588607270245,"y":1994.3060738364668,"name":"point"},"pe":{"x":1154.2588607270245,"y":394.3060738364668,"name":"point"},"name":"segment"},{"ps":{"x":1154.2588607270245,"y":394.3060738364668,"name":"point"},"pe":{"x":-942.7411392729755,"y":394.3060738364668,"name":"point"},"name":"segment"}]],"virtual":false},"fm":{"ejw":[0,0,0,0],"ew":[50,50,50,50]},"mm":{"sp":[],"fls":{"fls":[{"type":"Glass","pid":{"idx":-1,"pos":-1},"bd":{"type":"Bead","fm":{"ejw":[0,0,0,0],"ew":[20,20,20,20]}},"ser":{"text":"F1","offvec":{"x":0,"y":0,"name":"vector"}},"spet":{"sp":"","th":0,"te":[],"tm":{"width":0,"height":0},"mw":0},"wtf":true,"ws":false,"hs":[]}]},"lpfs":[],"dbs":{"bars":[]}},"sm":[],"cm":{"bn":"#F0540B","ben":"#F0540B","g":"rgba(0, 255, 255, 0.6)","hd":"#D4D1D9"},"tv":{"offset":{"x":0,"y":0,"name":"vector"},"hidden":false},"dm":{"dims":[{"type":"line","eidx":0,"midx":-1,"name":"","ds":true,"ov":{"x":0,"y":0,"name":"vector"},"at":0},{"type":"line","eidx":1,"midx":-1,"name":"","ds":true,"ov":{"x":0,"y":0,"name":"vector"},"at":0}]},"edm":[],"lds":false,"ser":{"from":{"x":1457.2588607270245,"y":1994.3060738364668,"name":"point"},"to":{"x":1873.5693659395347,"y":790.2284475333391,"name":"point"},"text":"asdasdxcvxcvxcvxc","fontSize":120,"cr":"blue"},"tn":false,"esr":[]}],"wall":[],"cp":[],"note":[{"from":{"x":-13.65682054439094,"y":895.8396453171109,"name":"point"},"to":{"x":-1510.5807543491596,"y":804.0038211573093,"name":"point"},"text":"nota-test","fontSize":120,"cr":"blue"}],"scale":0,"epi":[],"wlc":"#b4f595","s":{"cjs":100,"cs":60}}';
-    this.webcc.shapeManager.openFile(file, true, true);
+    this.webcc!.shapeManager.openFile(file, true, true);
 
-    console.log(this.webcc.dimManager);
+    console.log(this.webcc!.dimManager);
     //debugger;
     //let compiler = new Compiler();
 
@@ -241,17 +254,17 @@ export class AppComponent {
     }
 
     this.selectedSlideType = slide.appliedOptionIndex;
-    this.webcc.shapeManager.updatePoly(); /// Esta funcion actualiza el canvas, el refresh() no me funcionaba
+    //this.webcc!.shapeManager.updatePoly(); /// Esta funcion actualiza el canvas, el refresh() no me funcionaba
   }
 
   setMousePos() {
     this.mousePos = {
-      x: Math.round(this.webcc.toolManager.mousePosition.x),
-      y: Math.round(this.webcc.toolManager.mousePosition.y),
+      x: Math.round(this.webcc!.toolManager.mousePosition.x),
+      y: Math.round(this.webcc!.toolManager.mousePosition.y),
     };
   }
 
   importWindow() {
-    this.webcc.shapeManager.openFile(this.ventanaSeleccionada, true, true);
+    this.webcc!.shapeManager.openFile(this.ventanaSeleccionada, true, true);
   }
 }
